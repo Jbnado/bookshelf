@@ -1,7 +1,7 @@
 import { Request as ExpressRequest, Response, NextFunction } from 'express';
 
 import jwt from 'jsonwebtoken';
-import { JWT_SECRET } from '../config/config';
+import { JWT_SECRET } from '../config/config.js';
 
 interface Request extends ExpressRequest {
   userId?: string;

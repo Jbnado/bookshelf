@@ -1,8 +1,8 @@
 import { Model, DataTypes } from 'sequelize';
 import bcrypt from 'bcrypt';
-import jwt from 'jsonwebtoken';
-import database from './../../config/database';
-import { JWT_SECRET } from '../../config/config';
+import jwt, { JwtPayload } from 'jsonwebtoken';
+import database from './../../config/database.js';
+import { JWT_SECRET } from '../../config/config.js';
 
 class User extends Model {
   public id!: string;
@@ -23,11 +23,16 @@ class User extends Model {
     return bcrypt.compare(password, this.password);
   }
 
-  public generateToken() {
+  public generateToken(): string {
     const payload = { id: this.id };
     const options = { expiresIn: '1h' };
     const secret = JWT_SECRET as string;
     return jwt.sign(payload, secret, options);
+  }
+
+  public static verifyToken(token: string): JwtPayload {
+    const secret = JWT_SECRET as string;
+    return jwt.verify(token, secret) as JwtPayload;
   }
 }
 

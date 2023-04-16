@@ -1,5 +1,5 @@
 import { Router } from 'express';
-import userService from './user.service';
+import userService from './user.service.js';
 
 class UserRouter {
   public router: Router;
@@ -12,6 +12,7 @@ class UserRouter {
   private routes() {
     this.router.post('/', userService.store);
     this.router.post('/login', userService.login);
+    this.router.get('/user', userService.getUser);
   }
 }
 
